@@ -1,34 +1,37 @@
 package com.example.annotations;
 
-import org.androidannotations.annotations.Click;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
-import org.androidannotations.annotations.NoTitle;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.res.StringRes;
-
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
-import android.widget.Button;
-import android.widget.TextView;
+import android.util.Log;
 
-@NoTitle
 @Fullscreen
 @EActivity(R.layout.activity_annotations)
 public class Annotations extends Activity {
 	
-	@ViewById
-	TextView textView1;
+	public final static String TAG = "Annotations";
 	
-	@ViewById
-	Button btn;
+	@Bean
+	MainActions mainActions;
 	
-	@StringRes(R.string.text)
-	String text;
-	
-	@Click(R.id.btn)
-	void btnClicked(){
-		textView1.setText(text);
+	@AfterViews
+	void afterViews(){
+		doSomething();
 	}
+
+	private void doSomething() {
+		// TODO Auto-generated method stub
+		mainActions.doActionsInThread(20, new UiCallback() {
+			
+			@Override
+			public void onBackgroundEnd() {
+				// TODO Auto-generated method stub
+				Log.i(TAG, "the backgroudn thread end...");
+			}
+		});
+	}
+	
 }

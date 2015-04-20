@@ -6,17 +6,10 @@
 package com.example.annotations;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.TextView;
-import com.example.annotations.R.id;
 import com.example.annotations.R.layout;
-import com.example.annotations.R.string;
 import org.androidannotations.api.builder.ActivityIntentBuilder;
 import org.androidannotations.api.view.HasViews;
 import org.androidannotations.api.view.OnViewChangedListener;
@@ -39,11 +32,9 @@ public final class Annotations_
     }
 
     private void init_(Bundle savedInstanceState) {
-        OnViewChangedNotifier.registerOnViewChangedListener(this);
-        Resources resources_ = this.getResources();
-        text = resources_.getString(string.text);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN, android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        mainActions = MainActions_.getInstance_(this);
+        OnViewChangedNotifier.registerOnViewChangedListener(this);
     }
 
     @Override
@@ -74,20 +65,7 @@ public final class Annotations_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        btn = ((Button) hasViews.findViewById(id.btn));
-        textView1 = ((TextView) hasViews.findViewById(id.textView1));
-        if (btn!= null) {
-            btn.setOnClickListener(new OnClickListener() {
-
-
-                @Override
-                public void onClick(View view) {
-                    Annotations_.this.btnClicked();
-                }
-
-            }
-            );
-        }
+        afterViews();
     }
 
     public static class IntentBuilder_
